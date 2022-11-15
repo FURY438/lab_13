@@ -27,7 +27,8 @@ print_r($myArr);
         <?php
     echo '<h4> Новий масив: </h4>';
     function newArr($n){global $minElement;return $n*$minElement ;}
-        print_r(array_map('newArr',$myArr2=$myArr))
+        $myArr2=array_map('newArr',$myArr);
+       print_r($myArr2);
         ?>
     </div>
 <div>
