@@ -4,11 +4,8 @@ echo '<br>';
 echo '<img src="Screenshot_1.png"/>';
 echo '<br>';
 $myArr=array(0,5,0,-4,0,7,8,0,-5,9);
-echo '<h4>Наш масив: </h4>';
-foreach ($myArr as $row){
-    echo "{$row}; " ;
-}
-echo '<br>';
+echo "Наш масив:" ;
+print_r($myArr);
 ?>
 <div>
     <?php
@@ -22,57 +19,35 @@ echo '<br>';
 <div>
     <?php
     echo '<p> Його координати: </p>';
-    $keyMinElement=array_keys($myArr,min($myArr))[0];
+     $keyMinElement=array_keys($myArr,min($myArr))[0];
     echo $keyMinElement;
     ?>
 </div>
     <div>
         <?php
     echo '<h4> Новий масив: </h4>';
-    $myArr2=array();
-    $temp=null;
-    foreach ($myArr as $row){
-        $temp=$row*$minElement;
-        $myArr2[]=$temp;
-        echo  "{$temp}; ";
-    }
+    function newArr($n){global $minElement;return $n*$minElement ;}
+        print_r(array_map('newArr',$myArr2=$myArr))
         ?>
     </div>
 <div>
     <?php
     echo '<p> Координати додатніх елементів: </p>';
-    $positiveCountEl=0;
-    $sumaPositiveEl=0;
-    foreach ($myArr2 as $key => $value){
-        if($value >= 0){
-            echo "{$key};";
-            $positiveCountEl++;
-            $sumaPositiveEl=+$value;
-        }
-    }
-    echo " <br> Кількість додатніх елементів: {$positiveCountEl}";
-    $avereageValue=$sumaPositiveEl/$positiveCountEl;
-echo " <br> Середнє значення додатніх елементів: {$avereageValue}";
+    function checkEl($n){ if($n>=0) return (true);}
+        $positivEl=(array_filter($myArr2,"checkEl"));
+    print_r($positivEl);
+
+    echo " <br> Кількість додатніх елементів: ";
+    echo $positiveCount=count($positivEl);
+    $av=array_sum($positivEl)/$positiveCount;
+echo " <br> Середнє значення додатніх елементів: {$av}";
     ?>
 </div>
     <div>
         <?php
-        $multNegativEl=-1;
-        foreach ($myArr2 as  $value){
-            if($value < 0){
-            $multNegativEl*=$value;
-            }
-        }
-        function cubeRoot($value){
-            if($value<0){
-                $result=pow(abs($value),1/3);
-                return -$result;
-            }
-            else
-                return $result=pow($value,1/3);
-        }
+        $multNegativEl=array_product(array_filter($myArr2,function ($n){if($n<0) return (true);}));
         echo "<br> Добуток від'ємних елементів нового масиву: {$multNegativEl}";
-        $cubeSQRT= cubeRoot($multNegativEl);
+        $cubeSQRT=$multNegativEl**(1/3);
         echo "<br> Корінь кубічний з добутку від'ємних елементів нового масиву: {$cubeSQRT}";
         ?>
     </div>
